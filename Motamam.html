@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>استودیوی نئونی مجموعه‌ها و قوانین دمورگان</title>
+<link href="https://cdn.jsdelivr.net/npm/vazirmatn@33.0.3/Vazirmatn-font-face.min.css" rel="stylesheet">
+<style>
+/* ================= THEME: NEON PINK GLASSMORPHISM ================= */
+:root {
+  --bg-gradient: linear-gradient(135deg, #fff1f5 0%, #fce7f3 40%, #fae8ff 70%, #fdf2f8 100%);
+  --glass-bg: rgba(255, 255, 255, 0.88);
+  --glass-border: rgba(244, 63, 94, 0.28);
+  --glass-border-glow: rgba(236, 72, 153, 0.45);
+  --text-primary: #4a044e;
+  --text-secondary: #86198f;
+  --btn-bg: rgba(255, 255, 255, 0.75);
+  --input-bg: #ffffff;
+  --input-text: #4a044e;
+  --card-shadow: 0 12px 35px rgba(236, 72, 153, 0.16), 0 0 20px rgba(244, 63, 94, 0.08);
+  --svg-text: #4a044e;
+  --axis-line: #9d174d;
+  
+  --color-a: #f97316;
+  --color-b: #0284c7;
+  --color-c: #eab308;
+  --color-int: #10b981;
+  --color-union: #8b5cf6;
+  --color-interval-b: #8b5cf6;  /* رنگ بنفش برای مجموعه B روی محور */
+  --color-sym: #f43f5e;
+  --color-diff: #2563eb;
+  --color-comp: #ec4899;
+  --color-u-bounded: #0284c7;
+  
+  --base-region: #fdf2f8;      
+  --universal-fill: rgba(253, 232, 245, 0.7);
+}
+
+[data-theme="dark"] {
+  --bg-gradient: linear-gradient(135deg, #18051a 0%, #2a082e 50%, #1e092b 100%);
+  --glass-bg: rgba(40, 10, 48, 0.85);
+  --glass-border: rgba(244, 114, 182, 0.4);
+  --glass-border-glow: rgba(244, 63, 94, 0.6);
+  --text-primary: #fdf4ff;
+  --text-secondary: #f0abfc;
+  --btn-bg: rgba(255, 255, 255, 0.08);
+  --input-bg: rgba(24, 5, 26, 0.85);
+  --input-text: #fdf4ff;
+  --card-shadow: 0 16px 40px rgba(236, 72, 153, 0.3), 0 0 25px rgba(244, 63, 94, 0.15);
+  --svg-text: #fdf4ff;
+  --axis-line: #f472b6;
+  
+  --color-a: #fb923c;
+  --color-b: #38bdf8;
+  --color-c: #fde047;
+  --color-int: #34d399;
+  --color-union: #a78bfa;
+  --color-interval-b: #a78bfa;
+  --color-sym: #fb7185;
+  --color-diff: #60a5fa;
+  --color-comp: #f472b6;
+  --color-u-bounded: #38bdf8;
+  
+  --base-region: #2a082e;
+  --universal-fill: rgba(74, 4, 78, 0.55);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Vazirmatn',sans-serif;user-select:none; transition: background 0.25s, color 0.25s;}
+body{background:var(--bg-gradient);color:var(--text-primary);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:8px 8px 24px;}
+.container{width:100%;max-width:540px; position:relative;}
+
+.math-expr {
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+  display: inline-block !important;
+  white-space: nowrap !important;
+  font-family: 'Consolas', 'Menlo', 'Courier New', monospace;
+  font-weight: 700;
+  padding: 0 3px;
+}
+
+.theme-btn { position: absolute; left: 6px; top: -2px; background: var(--glass-bg); border: 1.5px solid var(--glass-border); color: var(--text-primary); border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 1.15rem; cursor: pointer; box-shadow: var(--card-shadow); z-index: 100;}
+.theme-btn:active { transform: scale(0.9); }
+
+header{text-align:center;margin-bottom:12px; margin-top:14px;}
+header h1{font-size:1.45rem;font-weight:900;background:linear-gradient(to right, #ec4899, #a855f7, #f43f5e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+header p{color:var(--text-secondary);font-size:0.8rem;margin-top:2px;font-weight:600;}
+
+.glass-card{background:var(--glass-bg);backdrop-filter:blur(22px);border:1.5px solid var(--glass-border);border-radius:18px;padding:12px;box-shadow:var(--card-shadow);margin-bottom:10px;}
+.footer-credit{text-align:center;margin-top:12px;font-size:0.78rem;color:var(--text-secondary);opacity:0.9;border-top:1px solid var(--glass-border);padding-top:8px;font-weight:bold;}
+
+.view { display: none !important; }
+.view.active { display: block !important; }
+
+.landing-grid{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
+.landing-btn{ 
+  width: 100%;
+  background:var(--glass-bg); 
+  border:1.5px solid var(--glass-border); 
+  border-radius:16px; 
+  padding:14px 16px; 
+  display:flex; 
+  align-items:center; 
+  gap:12px; 
+  cursor:pointer; 
+  text-align:right; 
+  color:var(--text-primary); 
+  box-shadow: var(--card-shadow);
+  outline: none;
+  transition: all 0.2s;
+}
+.landing-btn:hover { border-color: var(--glass-border-glow); transform: translateY(-2px); }
+.landing-btn:active{transform:scale(0.98);}
+.landing-btn * { pointer-events: none; }
+.landing-icon{flex:0 0 auto; width:44px;height:44px;}
+.landing-text{flex:1;}
+.landing-title{font-size:0.98rem;font-weight:800;}
+.landing-sub{font-size:0.75rem;color:var(--text-secondary);margin-top:2px;}
+
+.back-btn{ background:var(--btn-bg); border:1px solid var(--glass-border); color:var(--text-primary); padding:5px 12px; border-radius:10px; font-size:0.8rem; font-weight:700; cursor:pointer; margin-bottom:10px; }
+.mini-row{display:flex;gap:6px;margin-bottom:8px;}
+.mini-btn{flex:1;background:var(--btn-bg);border:1px solid var(--glass-border);color:var(--text-primary);padding:6px 4px;border-radius:9px;font-size:0.78rem;font-weight:700;cursor:pointer;transition:all 0.2s;text-align:center;}
+.mini-btn.active{background:var(--color-interval-b);color:#fff;border-color:var(--color-interval-b);box-shadow: 0 4px 12px rgba(139, 92, 246, 0.35);}
+.mini-btn.pink.active{background:var(--color-comp);border-color:var(--color-comp);color:#fff;box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4);}
+
+.operations-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:10px;}
+@media (max-width:390px){.operations-grid{grid-template-columns:repeat(2,1fr);}}
+
+.op-btn{background:var(--btn-bg);border:1px solid var(--glass-border);color:var(--text-primary);padding:6px 3px;border-radius:8px;font-size:0.72rem;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center;transition:all 0.2s;}
+.op-btn span{font-size:0.68rem;opacity:0.85;direction:ltr;font-family:monospace;}
+.op-btn.active{background:var(--color-comp);border-color:var(--color-comp);color:#fff;font-weight:bold;}
+
+.slider-control{background:rgba(255,255,255,0.4);padding:8px 10px;border-radius:12px;margin-bottom:10px;border:1px solid var(--glass-border);}
+.slider-header{display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-secondary);margin-bottom:4px;font-weight:bold;}
+input[type=range]{width:100%;accent-color:var(--color-comp);cursor:pointer;}
+
+.venn-wrapper{position:relative;display:flex;justify-content:center;align-items:center;margin:6px 0;}
+svg{width:100%;max-width:480px;height:auto;overflow:visible;}
+.venn-region{fill:var(--base-region);stroke:rgba(255,255,255,0.8);stroke-width:1.8;transition:fill 0.25s;}
+.universal-bg{fill:var(--universal-fill);stroke:var(--glass-border);stroke-width:2;}
+.circle-outline{fill:none;stroke:var(--text-primary);stroke-width:2;opacity:0.75;}
+.label{font-size:16px;font-weight:900;fill:var(--text-primary);}
+
+.hl-a{fill:var(--color-a) !important;fill-opacity:0.88 !important;}
+.hl-b{fill:var(--color-b) !important;fill-opacity:0.88 !important;}
+.hl-c{fill:var(--color-c) !important;fill-opacity:0.88 !important;}
+.hl-int{fill:var(--color-int) !important;fill-opacity:0.92 !important;}
+.hl-union{fill:var(--color-union) !important;fill-opacity:0.88 !important;}
+.hl-sym{fill:var(--color-sym) !important;fill-opacity:0.88 !important;}
+.hl-diff{fill:var(--color-diff) !important;fill-opacity:0.88 !important;}
+.hl-comp{fill:var(--color-comp) !important;fill-opacity:0.88 !important;}
+
+/* ==================== رابط کاربری بازه‌ها ==================== */
+.interval-clean-card {
+  background: rgba(255,255,255,0.72);
+  border: 1.5px solid var(--glass-border);
+  border-radius: 14px;
+  padding: 10px;
+  margin-bottom: 8px;
+}
+.interval-title-badge {
+  text-align: center;
+  font-weight: 800;
+  font-size: 0.88rem;
+  margin-bottom: 6px;
+}
+
+.interval-strip-container {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  direction: ltr !important;
+  gap: 3px !important;
+  width: 100% !important;
+  white-space: nowrap !important;
+}
+
+.bracket-select {
+  background: var(--input-bg);
+  border: 1.5px solid var(--glass-border);
+  color: var(--text-primary);
+  border-radius: 7px;
+  padding: 4px 2px;
+  font-family: monospace;
+  font-size: 1.15rem;
+  font-weight: 900;
+  cursor: pointer;
+  outline: none;
+  min-width: 34px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.bound-combo {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  background: var(--input-bg);
+  border: 1.5px solid var(--glass-border);
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.bound-combo input {
+  width: 48px !important;
+  border: none !important;
+  background: transparent !important;
+  color: var(--input-text) !important;
+  font-family: 'Consolas', monospace !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  text-align: center !important;
+  outline: none !important;
+  padding: 5px 2px !important;
+  direction: ltr !important;
+  unicode-bidi: bidi-override !important;
+}
+
+.bound-combo select {
+  border: none !important;
+  border-left: 1px solid var(--glass-border) !important;
+  background: rgba(0,0,0,0.03) !important;
+  color: var(--text-primary) !important;
+  font-size: 0.76rem !important;
+  font-weight: 800 !important;
+  padding: 6px 4px !important;
+  cursor: pointer !important;
+  outline: none !important;
+  flex-shrink: 0;
+}
+
+.quick-bar {
+  display: flex;
+  gap: 4px;
+  padding: 5px 0 2px;
+  margin-top: 4px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.quick-pill {
+  background: var(--btn-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 0.74rem;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.quick-pill.active {
+  background: var(--color-comp);
+  color: white;
+  border-color: var(--color-comp);
+}
+
+/* کادر دو خطی و کاملاً خوانا برای فرمول و اعضا */
+.caption-box { 
+  background: rgba(255,255,255,0.7); 
+  border: 1.5px solid var(--glass-border); 
+  border-radius: 14px; 
+  padding: 10px 12px; 
+  margin-top: 8px; 
+  text-align: center; 
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; 
+  gap: 4px;
+}
+.caption-line1 {
+  font-family: 'Consolas', monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  direction: ltr;
+}
+.caption-line2 {
+  font-family: 'Consolas', monospace;
+  font-size: 1.15rem;
+  font-weight: 800;
+  direction: ltr;
+  padding: 2px 6px;
+}
+.caption-fa{
+  direction:rtl;
+  font-weight:600;
+  font-size:0.82rem;
+  color:var(--text-secondary);
+  margin-top:4px;
+  text-align:center; 
+  line-height: 1.6;
+}
+
+.draw-line { stroke-dasharray: 2000; stroke-dashoffset: 2000; transition: stroke-dashoffset 0.65s ease-in-out; }
+.draw-line.animate { stroke-dashoffset: 0; }
+.fade-dot { opacity: 0; transform: scale(0.1); transform-box: fill-box; transform-origin: center; transition: all 0.35s ease; }
+.fade-dot.animate { opacity: 1; transform: scale(1); }
+
+/* آزمون و فلش کارت‌ها */
+.quiz-name-input { width: 100%; max-width: 300px; background: var(--input-bg); border: 1.5px solid var(--glass-border); color: var(--input-text); padding: 8px 12px; border-radius: 12px; font-size: 0.92rem; font-weight: 700; text-align: center; margin: 10px auto; display: block; outline: none; }
+.mode-card-btn { width: 100%; background: var(--glass-bg); border: 1.5px solid var(--glass-border); border-radius: 12px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; color: var(--text-primary); font-size: 0.85rem; font-weight: 800; margin-bottom: 7px; transition: all 0.2s; }
+.progress-container { width: 100%; background: rgba(0,0,0,0.06); border-radius: 20px; height: 11px; overflow: hidden; margin: 6px 0 10px; border: 1px solid var(--glass-border); }
+.progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #ec4899, #a855f7); border-radius: 20px; transition: width 0.3s ease; }
+.quiz-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; font-weight: bold; margin-bottom: 5px; }
+.quiz-timer-badge { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; padding: 2px 8px; border-radius: 16px; font-family: monospace; font-size: 0.84rem; font-weight: 800; }
+.quiz-timer-badge.safe { background: #e0f2fe; color: #0284c7; border-color: #7dd3fc; }
+.quiz-q-box { background: rgba(255,255,255,0.8); border: 1.5px solid var(--glass-border); border-radius: 12px; padding: 12px; font-size: 0.92rem; line-height: 1.9; margin-bottom: 10px; text-align: center; font-weight: 700; }
+.quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px; }
+@media (max-width:440px){.quiz-options{grid-template-columns:1fr;}}
+.quiz-opt-btn { background: var(--btn-bg); border: 1.5px solid var(--glass-border); border-radius: 10px; padding: 9px 6px; font-size: 0.88rem; font-weight: bold; cursor: pointer; text-align: center; direction: ltr; font-family: monospace; color: var(--text-primary); }
+.quiz-opt-btn.correct { background: #10b981 !important; color: #fff !important; border-color: #059669 !important; }
+.quiz-opt-btn.wrong { background: #ef4444 !important; color: #fff !important; border-color: #dc2626 !important; }
+.quiz-feedback { display: none; padding: 10px; border-radius: 10px; font-size: 0.85rem; line-height: 1.7; margin-bottom: 8px; text-align: center; font-weight: 600; }
+.quiz-feedback.show { display: block; }
+.quiz-next-btn { width: 100%; background: linear-gradient(to right, #ec4899, #a855f7); color: #fff; border: none; padding: 10px; border-radius: 10px; font-size: 0.9rem; font-weight: bold; cursor: pointer; display: none; }
+.quiz-next-btn.show { display: block; }
+
+.confetti-particle { position: fixed; pointer-events: none; z-index: 9999; font-size: 24px; animation: floatUpFade 1.5s ease-out forwards; }
+@keyframes floatUpFade { 0% { opacity: 1; transform: translate(0, 0) scale(0.5); } 100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(1.1); } }
+.fc-card-wrapper { perspective: 1000px; margin: 12px 0; }
+.fc-card { position: relative; width: 100%; min-height: 160px; background: rgba(255,255,255,0.85); border: 1.5px solid var(--glass-border); border-radius: 16px; cursor: pointer; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: var(--card-shadow); display: flex; align-items: center; justify-content: center; padding: 16px; text-align: center; }
+.fc-card.flipped { transform: rotateY(180deg); }
+.fc-card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 14px; }
+.fc-card-back { transform: rotateY(180deg); background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(253,242,248,0.95)); border-radius: 16px; }
+.fc-hint-text { font-size: 0.74rem; color: var(--text-secondary); margin-top: 6px; font-weight: bold; }
+</style>
+</head>
+<body>
+<div class="container">
+  
+  <button type="button" class="theme-btn" id="theme-toggle" onclick="toggleTheme()">☀️</button>
+
+  <!-- ==================== LANDING ==================== -->
+  <div id="view-landing" class="view active">
+    <header>
+      <h1>استودیوی مجموعه‌ها</h1>
+      <p>یکی از بخش‌های تعاملی و آموزشی زیر را انتخاب کنید</p>
+    </header>
+    <div class="landing-grid">
+
+      <button type="button" class="landing-btn" onclick="showView('venn2')">
+        <svg class="landing-icon" viewBox="0 0 60 60"><circle cx="24" cy="30" r="18" fill="var(--color-a)" fill-opacity="0.85"/><circle cx="38" cy="30" r="18" fill="var(--color-b)" fill-opacity="0.85"/></svg>
+        <div class="landing-text">
+          <div class="landing-title">🎯 قلمرو ون (دو مجموعه‌ای)</div>
+          <div class="landing-sub">کاوش تعاملی در مرزهای مشترک و پنهان</div>
+        </div>
+      </button>
+
+      <button type="button" class="landing-btn" onclick="showView('venn3')">
+        <svg class="landing-icon" viewBox="0 0 60 60"><circle cx="22" cy="24" r="16" fill="var(--color-a)" fill-opacity="0.85"/><circle cx="38" cy="24" r="16" fill="var(--color-b)" fill-opacity="0.85"/><circle cx="30" cy="38" r="16" fill="var(--color-c)" fill-opacity="0.85"/></svg>
+        <div class="landing-text">
+          <div class="landing-title">🔮 تقاطع سه‌گانه (ون ۳)</div>
+          <div class="landing-sub">فتح ۸ قلمرو شگفت‌انگیز در دل دایره‌ها</div>
+        </div>
+      </button>
+
+      <!-- اصلاح عنوان در لندینگ مطابق درخواست -->
+      <button type="button" class="landing-btn" onclick="showView('complement')">
+        <svg class="landing-icon" viewBox="0 0 60 60">
+          <line x1="8" y1="30" x2="52" y2="30" stroke="var(--color-interval-b)" stroke-width="4" stroke-linecap="round"/>
+          <line x1="8" y1="16" x2="26" y2="16" stroke="var(--color-comp)" stroke-width="4" stroke-linecap="round"/>
+          <line x1="38" y1="16" x2="52" y2="16" stroke="var(--color-comp)" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+        <div class="landing-text">
+          <div class="landing-title" style="color:var(--color-comp);">🕵️‍♂️ کارگاه متمم (کی غایبه؟)</div>
+          <div class="landing-sub">شکار بازه‌ها و نقاط مخفی روی محور اعداد</div>
+        </div>
+      </button>
+
+      <button type="button" class="landing-btn" onclick="showView('demorgan')" style="border-color:var(--color-comp); background:linear-gradient(135deg, rgba(236,72,153,0.08), transparent);">
+        <svg class="landing-icon" viewBox="0 0 60 60">
+          <rect x="6" y="10" width="48" height="40" rx="8" fill="none" stroke="var(--color-comp)" stroke-width="2"/>
+          <line x1="14" y1="22" x2="46" y2="22" stroke="var(--color-comp)" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="14" y1="30" x2="38" y2="30" stroke="var(--color-comp)" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="14" y1="38" x2="42" y2="38" stroke="var(--color-comp)" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <div class="landing-text">
+          <div class="landing-title" style="color:var(--color-comp);">✨ اصول متمم و قوانین دِ مورگان</div>
+          <div class="landing-sub">خلاصه قوانین طلایی متمم و دِ مورگان با نگارش استاندارد</div>
+        </div>
+      </button>
+
+      <button type="button" class="landing-btn" onclick="showView('flashcards')" style="border-color:var(--color-b); background:linear-gradient(135deg, rgba(2,132,199,0.08), transparent);">
+        <svg class="landing-icon" viewBox="0 0 60 60">
+          <rect x="10" y="12" width="40" height="36" rx="6" fill="none" stroke="var(--color-b)" stroke-width="2.5"/>
+          <line x1="18" y1="22" x2="34" y2="22" stroke="var(--color-b)" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="18" y1="30" x2="42" y2="30" stroke="var(--color-b)" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="18" y1="38" x2="28" y2="38" stroke="var(--color-b)" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <div class="landing-text">
+          <div class="landing-title" style="color:var(--color-b);">💎 گنجینه طلایی فرمول‌ها</div>
+          <div class="landing-sub">۱۶ کلید سرنوشت‌ساز کتاب درسی با لمس و چرخش</div>
+        </div>
+      </button>
+
+      <button type="button" class="landing-btn" onclick="showView('quiz')" style="border-color:var(--color-int); background:linear-gradient(135deg, rgba(16,185,129,0.08), transparent);">
+        <svg class="landing-icon" viewBox="0 0 60 60">
+          <circle cx="30" cy="30" r="22" fill="none" stroke="var(--color-int)" stroke-width="2.5"/>
+          <path d="M22 30 L28 36 L38 24" fill="none" stroke="var(--color-int)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="landing-text">
+          <div class="landing-title" style="color:var(--color-int);">⚔️ میدان نبرد نهایی (آزمون تصادفی پویا)</div>
+          <div class="landing-sub">تولید ۱۰ سوال کاملاً تصادفی و نو در هر بار اجرا</div>
+        </div>
+      </button>
+
+    </div>
+    <div class="footer-credit">تنظیم شده توسط زینب صفری</div>
+  </div>
+
+  <!-- ==================== VIEW: VENN 2 ==================== -->
+  <div id="view-venn2" class="view">
+    <button type="button" class="back-btn" onclick="showView('landing')">‹ بازگشت به منو</button>
+    <div class="glass-card">
+        <div class="operations-grid">
+            <button type="button" class="op-btn" onclick="selectLabOp('A', this)">مجموعه A <span>A</span></button>
+            <button type="button" class="op-btn" onclick="selectLabOp('B', this)">مجموعه B <span>B</span></button>
+            <button type="button" class="op-btn active" onclick="selectLabOp('union', this)">اجتماع <span>A ∪ B</span></button>
+            <button type="button" class="op-btn" onclick="selectLabOp('intersection', this)">اشتراک <span>A ∩ B</span></button>
+            <button type="button" class="op-btn" onclick="selectLabOp('diffA', this)">تفاضل A <span>A - B</span></button>
+            <button type="button" class="op-btn" onclick="selectLabOp('diffB', this)">تفاضل B <span>B - A</span></button>
+            <button type="button" class="op-btn" onclick="selectLabOp('symDiff', this)">تفاضل متقارن <span>A Δ B</span></button>
+            <button type="button" class="op-btn" onclick="selectLabOp('compA', this)">متمم A <span>A'</span></button>
+            <button type="button" class="op-btn" onclick="selectLabOp('compB', this)">متمم B <span>B'</span></button>
+            <button type="button" class="op-btn" onclick="selectLabOp('compUnion', this)">متمم اجتماع <span>(A ∪ B)'</span></button>
+            <button type="button" class="op-btn" onclick="selectLabOp('compIntersection', this)">متمم اشتراک <span>(A ∩ B)'</span></button>
+        </div>
+
+        <div class="slider-control">
+            <div class="slider-header">
+                <span>وضعیت نسبت به یکدیگر:</span>
+                <span id="slider-status-text" style="color: var(--color-comp); font-weight: bold;">متداخل</span>
+            </div>
+            <input type="range" id="distanceSlider" min="0" max="190" value="120" oninput="updateCircleDistance(this.value)">
+        </div>
+
+        <div class="venn-wrapper">
+            <svg viewBox="0 0 500 300">
+                <defs>
+                    <mask id="mask-a"><rect width="500" height="300" fill="white" /><circle id="m-circle-a" cx="190" cy="150" r="95" fill="black" /></mask>
+                    <mask id="mask-b"><rect width="500" height="300" fill="white" /><circle id="m-circle-b" cx="310" cy="150" r="95" fill="black" /></mask>
+                    <mask id="mask-only-a"><circle id="m-circle-only-a" cx="190" cy="150" r="95" fill="white" /></mask>
+                </defs>
+                <rect id="lab-outside" class="universal-bg" x="10" y="10" width="480" height="280" rx="15" />
+                <circle id="lab-onlyA" class="venn-region" cx="190" cy="150" r="95" mask="url(#mask-b)" />
+                <circle id="lab-onlyB" class="venn-region" cx="310" cy="150" r="95" mask="url(#mask-a)" />
+                <circle id="lab-intersection" class="venn-region" cx="310" cy="150" r="95" mask="url(#mask-only-a)" />
+                <circle id="outline-a" cx="190" cy="150" r="95" class="circle-outline" />
+                <circle id="outline-b" cx="310" cy="150" r="95" class="circle-outline" />
+                <text x="32" y="44" class="label" fill="var(--text-secondary)">U</text>
+                <text id="label-a-pos" x="120" y="90" class="label">A</text>
+                <text id="label-b-pos" x="370" y="90" class="label">B</text>
+            </svg>
+        </div>
+
+        <div id="venn2-caption" class="caption-fa" style="margin-top:10px; font-weight:bold;">
+          ناحیه‌های رنگی نمایشگر <b>اجتماع دو مجموعه (<span class="math-expr" dir="ltr">A ∪ B</span>)</b> هستند.
+        </div>
+    </div>
+    <div class="footer-credit">تنظیم شده توسط زینب صفری</div>
+  </div>
+
+  <!-- ==================== VIEW: VENN 3 ==================== -->
+  <div id="view-venn3" class="view">
+    <button type="button" class="back-btn" onclick="showView('landing')">‹ بازگشت به منو</button>
+    <div class="glass-card">
+        <div class="operations-grid">
+            <button type="button" class="op-btn" onclick="selectVenn3Op('A', this)">مجموعه A <span>A</span></button>
+            <button type="button" class="op-btn" onclick="selectVenn3Op('B', this)">مجموعه B <span>B</span></button>
+            <button type="button" class="op-btn" onclick="selectVenn3Op('C', this)">مجموعه C <span>C</span></button>
+            <button type="button" class="op-btn active" onclick="selectVenn3Op('union', this)">اجتماع ۳ مجموعه <span>A ∪ B ∪ C</span></button>
+            <button type="button" class="op-btn" onclick="selectVenn3Op('inter3', this)">اشتراک ۳ مجموعه <span>A ∩ B ∩ C</span></button>
+            <button type="button" class="op-btn" onclick="selectVenn3Op('symDiff', this)">تفاضل متقارن <span>A Δ B Δ C</span></button>
+            <button type="button" class="op-btn" onclick="selectVenn3Op('interAB', this)">اشتراک A و B <span>A ∩ B</span></button>
+            <button type="button" class="op-btn" onclick="selectVenn3Op('interAC', this)">اشتراک A و C <span>A ∩ C</span></button>
+            <button type="button" class="op-btn" onclick="selectVenn3Op('interBC', this)">اشتراک B و C <span>B ∩ C</span></button>
+            <button type="button" class="op-btn" onclick="selectVenn3Op('diffAB', this)">تفاضل A - B <span>A - B</span></button>
+            <button type="button" class="op-btn" onclick="selectVenn3Op('diffA_BC', this)">تفاضل A - (B ∪ C) <span>A - (B ∪ C)</span></button>
+            <button type="button" class="op-btn" onclick="selectVenn3Op('compUnion', this)">متمم اجتماع <span>(A ∪ B ∪ C)'</span></button>
+        </div>
+
+        <div class="venn-wrapper">
+            <svg viewBox="0 0 500 450">
+                <defs>
+                    <mask id="m-A"><rect width="500" height="450" fill="white"/><circle cx="190" cy="180" r="110" fill="black"/></mask>
+                    <mask id="m-B"><rect width="500" height="450" fill="white"/><circle cx="310" cy="180" r="110" fill="black"/></mask>
+                    <mask id="m-C"><rect width="500" height="450" fill="white"/><circle cx="250" cy="270" r="110" fill="black"/></mask>
+                    <mask id="m-onlyA"><circle cx="190" cy="180" r="110" fill="white"/></mask>
+                    <mask id="m-onlyB"><circle cx="310" cy="180" r="110" fill="white"/></mask>
+                    <mask id="m-onlyC"><circle cx="250" cy="270" r="110" fill="white"/></mask>
+                </defs>
+                <rect id="reg-outside" class="universal-bg" x="10" y="10" width="480" height="430" rx="16" />
+                <g mask="url(#m-C)"><circle id="reg-onlyA-final" class="venn-region" cx="190" cy="180" r="110" mask="url(#m-B)"/></g>
+                <g mask="url(#m-C)"><circle id="reg-onlyB-final" class="venn-region" cx="310" cy="180" r="110" mask="url(#m-A)"/></g>
+                <g mask="url(#m-B)"><circle id="reg-onlyC-final" class="venn-region" cx="250" cy="270" r="110" mask="url(#m-A)"/></g>
+                <g mask="url(#m-C)"><circle id="reg-ab-final" class="venn-region" cx="310" cy="180" r="110" mask="url(#m-onlyA)"/></g>
+                <g mask="url(#m-B)"><circle id="reg-ac-final" class="venn-region" cx="250" cy="270" r="110" mask="url(#m-onlyA)"/></g>
+                <g mask="url(#m-A)"><circle id="reg-bc-final" class="venn-region" cx="250" cy="270" r="110" mask="url(#m-onlyB)"/></g>
+                <g mask="url(#m-onlyC)"><g mask="url(#m-onlyB)"><circle id="reg-abc-final" class="venn-region" cx="190" cy="180" r="110"/></g></g>
+                <circle cx="190" cy="180" r="110" class="circle-outline" />
+                <circle cx="310" cy="180" r="110" class="circle-outline" />
+                <circle cx="250" cy="270" r="110" class="circle-outline" />
+                <text x="32" y="44" class="label" fill="var(--text-secondary)">U</text>
+                <text x="120" y="120" class="label">A</text>
+                <text x="370" y="120" class="label">B</text>
+                <text x="245" y="415" class="label">C</text>
+            </svg>
+        </div>
+
+        <div id="venn3-caption" class="caption-fa" style="margin-top:10px; font-weight:bold;">
+          <b>اجتماع ۳ مجموعه (<span class="math-expr" dir="ltr">A ∪ B ∪ C</span>):</b> تمام اعضایی که در حداقل یکی از این سه مجموعه قرار دارند.
+        </div>
+    </div>
+    <div class="footer-credit">تنظیم شده توسط زینب صفری</div>
+  </div>
+
+  <!-- ==================== VIEW: COMPLEMENT (کارگاه متمم (کی غایبه؟)) ==================== -->
+  <div id="view-complement" class="view">
+    <button type="button" class="back-btn" onclick="showView('landing')">‹ بازگشت به منو</button>
+
+    <div class="glass-card">
+        <!-- عنوان تمیز و دقیق مطابق درخواست کاربر -->
+        <div style="text-align:center; font-weight:900; font-size:1.15rem; color:var(--color-comp); margin-bottom:10px;">
+          🕵️‍♂️ کارگاه متمم (کی غایبه؟)
+        </div>
+
+        <!-- ۱. مجموعه مرجع U -->
+        <div class="interval-clean-card" style="border-color:var(--color-b);">
+          <div class="interval-title-badge" style="color:var(--color-b);">مجموعه مرجع U (بازه یا مرجع کلی)</div>
+          
+          <div class="interval-strip-container" id="u-strip">
+            <select id="u-bracket-left" class="bracket-select" onchange="onEndpointChange('u')">
+              <option value="[">[</option>
+              <option value="(">(</option>
+            </select>
+
+            <!-- کپسول ابتدای U -->
+            <div class="bound-combo">
+              <input type="text" inputmode="text" id="u-val-left" value="-10" onchange="validateAndDraw('u-val-left')">
+              <select id="u-type-left" onchange="onEndpointChange('u')">
+                <option value="num">عدد</option>
+                <option value="-inf">−∞</option>
+              </select>
+            </div>
+
+            <span style="font-weight:900; font-size:1.15rem; color:var(--text-primary); margin:0 3px;">,</span>
+
+            <!-- کپسول انتهای U -->
+            <div class="bound-combo">
+              <input type="text" inputmode="text" id="u-val-right" value="10" onchange="validateAndDraw('u-val-right')">
+              <select id="u-type-right" onchange="onEndpointChange('u')">
+                <option value="num">عدد</option>
+                <option value="+inf">+∞</option>
+              </select>
+            </div>
+
+            <select id="u-bracket-right" class="bracket-select" onchange="onEndpointChange('u')">
+              <option value="]">]</option>
+              <option value=")">)</option>
+            </select>
+          </div>
+
+          <!-- دکمه‌های آماده مراجع رسمی کتاب: R و Z و N -->
+          <div class="quick-bar">
+            <button type="button" class="quick-pill active" id="pill-u-R" onclick="setPresetU('R')">کل اعداد حقیقی ℝ</button>
+            <button type="button" class="quick-pill" id="pill-u-Z" onclick="setPresetU('Z')">اعداد صحیح ℤ</button>
+            <button type="button" class="quick-pill" id="pill-u-N" onclick="setPresetU('N')">اعداد طبیعی ℕ</button>
+            <button type="button" class="quick-pill" id="pill-u-pos" onclick="setPresetU('pos')">[0, +∞)</button>
+          </div>
+        </div>
+
+        <!-- ۲. مجموعه B (با رنگ بنفش اختصاصی) -->
+        <div class="interval-clean-card" style="border-color:var(--color-interval-b);">
+          <div class="interval-title-badge" style="color:var(--color-interval-b);">بازه یا مجموعه B (بنفش)</div>
+          
+          <div class="interval-strip-container">
+            <select id="b-bracket-left" class="bracket-select" onchange="onEndpointChange('b')">
+              <option value="[">[</option>
+              <option value="(">(</option>
+            </select>
+
+            <!-- کپسول ابتدای B -->
+            <div class="bound-combo">
+              <input type="text" inputmode="text" id="b-val-left" value="-3" onchange="validateAndDraw('b-val-left')">
+              <select id="b-type-left" onchange="onEndpointChange('b')">
+                <option value="num">عدد</option>
+                <option value="-inf">−∞</option>
+              </select>
+            </div>
+
+            <span style="font-weight:900; font-size:1.15rem; color:var(--text-primary); margin:0 3px;">,</span>
+
+            <!-- کپسول انتهای B -->
+            <div class="bound-combo">
+              <input type="text" inputmode="text" id="b-val-right" value="4" onchange="validateAndDraw('b-val-right')">
+              <select id="b-type-right" onchange="onEndpointChange('b')">
+                <option value="num">عدد</option>
+                <option value="+inf">+∞</option>
+              </select>
+            </div>
+
+            <select id="b-bracket-right" class="bracket-select" onchange="onEndpointChange('b')">
+              <option value="]">]</option>
+              <option value=")">)</option>
+            </select>
+          </div>
+
+          <!-- دکمه‌های آماده بازه B -->
+          <div class="quick-bar">
+            <button type="button" class="quick-pill" onclick="setPresetB('bounded')">محدود [-3, 4]</button>
+            <button type="button" class="quick-pill" onclick="setPresetB('rayRight')">[2, +∞)</button>
+            <button type="button" class="quick-pill" onclick="setPresetB('rayLeft')">(-∞, 3]</button>
+          </div>
+        </div>
+
+        <!-- دکمه‌های انتخاب وضعیت رسم روی محور -->
+        <div class="mini-row" style="margin-top:10px;">
+          <button type="button" class="mini-btn active" id="btn-dyn-B" onclick="dynDraw('B')">نمایش مجموعه B روی محور</button>
+          <button type="button" class="mini-btn pink" id="btn-dyn-Bcomp" onclick="dynDraw('Bcomp')">محاسبه و نمایش متمم B'</button>
+        </div>
+
+        <div class="interval-svg-wrap">
+          <svg id="dyn-svg" viewBox="0 0 800 185" style="overflow:visible; margin-top:2px;"></svg>
+        </div>
+
+        <!-- کادر دوخطی و بسیار خوانا -->
+        <div class="caption-box">
+          <div id="dyn-caption-line1" class="caption-line1"></div>
+          <div id="dyn-caption-line2" class="caption-line2"></div>
+        </div>
+        <div class="caption-fa" id="dyn-caption-fa"></div>
+    </div>
+
+    <div class="footer-credit">تنظیم شده توسط زینب صفری</div>
+  </div>
+
+  <!-- ==================== VIEW: DE MORGAN ==================== -->
+  <div id="view-demorgan" class="view">
+    <button type="button" class="back-btn" onclick="showView('landing')">‹ بازگشت به منو</button>
+    <div class="glass-card" style="line-height:2.1; font-size:0.9rem;">
+      <div style="font-size:1.05rem; font-weight:800; color:var(--color-comp); margin-bottom:8px; border-bottom:1.5px solid var(--glass-border); padding-bottom:6px;">
+        📌 اصول بنیادی متمم
+      </div>
+      <div>۱) <b>متممِ متمم:</b> <span class="math-expr" dir="ltr">(A')' = A</span></div>
+      <div>۲) <b>متمم مجموعه مرجع:</b> <span class="math-expr" dir="ltr">U' = ∅</span></div>
+      <div>۳) <b>متمم مجموعه تهی:</b> <span class="math-expr" dir="ltr">∅' = U</span></div>
+      <div>۴) <b>اجتماع و اشتراک با متمم:</b> <span class="math-expr" dir="ltr">A ∪ A' = U</span> و <span class="math-expr" dir="ltr">A ∩ A' = ∅</span></div>
+      <div>۵) <b>تفاضل مرجع:</b> <span class="math-expr" dir="ltr">U - A = A'</span> و <span class="math-expr" dir="ltr">A - U = ∅</span></div>
+
+      <div style="margin-top:16px; font-size:1.05rem; font-weight:800; color:var(--color-union); margin-bottom:8px; border-bottom:1.5px solid var(--glass-border); padding-bottom:6px;">
+        ✨ قوانین دِ مورگان (De Morgan's Laws)
+      </div>
+      
+      <div style="background:rgba(236,72,153,0.08); border:1.5px solid var(--glass-border); border-radius:14px; padding:12px; margin-bottom:10px;">
+        <div style="font-weight:800; color:var(--color-comp); margin-bottom:4px;">قانون اول (متمم اجتماع):</div>
+        <div class="caption-box" style="margin:4px 0 8px;">
+          <span class="math-expr" dir="ltr" style="font-size:1.15rem; color:var(--color-comp);">(A ∪ B)' = A' ∩ B'</span>
+        </div>
+        <div style="font-size:0.84rem; color:var(--text-secondary);">
+          متمم اجتماع دو مجموعه، برابر با <b>اشتراک متمم‌های آن‌ها</b> است.
+        </div>
+      </div>
+
+      <div style="background:rgba(168,85,247,0.08); border:1.5px solid var(--glass-border); border-radius:14px; padding:12px;">
+        <div style="font-weight:800; color:var(--color-union); margin-bottom:4px;">قانون دوم (متمم اشتراک):</div>
+        <div class="caption-box" style="margin:4px 0 8px;">
+          <span class="math-expr" dir="ltr" style="font-size:1.15rem; color:var(--color-union);">(A ∩ B)' = A' ∪ B'</span>
+        </div>
+        <div style="font-size:0.84rem; color:var(--text-secondary);">
+          متمم اشتراک دو مجموعه، برابر با <b>اجتماع متمم‌های آن‌ها</b> است.
+        </div>
+      </div>
+    </div>
+    <div class="footer-credit">تنظیم شده توسط زینب صفری</div>
+  </div>
+
+  <!-- ==================== VIEW: FLASHCARDS ==================== -->
+  <div id="view-flashcards" class="view">
+    <button type="button" class="back-btn" onclick="showView('landing')">‹ بازگشت به منو</button>
+    <div class="glass-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.85rem; font-weight:bold; margin-bottom:8px;">
+        <span style="color:var(--color-comp);">ویژگی‌های ۱۶ گانه کتاب درسی</span>
+        <span id="fc-counter-text" style="color:var(--text-secondary);">۱ از ۱۶</span>
+      </div>
+
+      <div class="fc-card-wrapper">
+        <div class="fc-card" id="fc-main-card" onclick="flipFlashcard()">
+          <div class="fc-card-face fc-card-front" id="fc-front-content"></div>
+          <div class="fc-card-face fc-card-back" id="fc-back-content"></div>
+        </div>
+      </div>
+      <div class="fc-hint-text" style="text-align:center;">💡 برای مشاهده پاسخ، روی کارت کلیک یا لمس کنید.</div>
+
+      <div class="mini-row" style="margin-top:14px;">
+        <button type="button" class="mini-btn" onclick="prevFlashcard()">‹ کارت قبلی</button>
+        <button type="button" class="mini-btn pink active" onclick="nextFlashcard()">کارت بعدی ›</button>
+      </div>
+    </div>
+    <div class="footer-credit">تنظیم شده توسط زینب صفری</div>
+  </div>
+
+  <!-- ==================== VIEW: QUIZ ==================== -->
+  <div id="view-quiz" class="view">
+    <button type="button" class="back-btn" onclick="exitQuizToLanding()">‹ بازگشت به منو</button>
+    <div class="glass-card" id="quiz-setup-card">
+      <div style="text-align:center; font-size:1.1rem; font-weight:800; color:var(--color-comp); margin-bottom:6px;">
+        ⚔️ میدان نبرد نهایی (آزمون تصادفی پویا)
+      </div>
+      <p style="text-align:center; font-size:0.82rem; color:var(--text-secondary); margin-bottom:12px;">
+        نام خود را وارد کنید و سپس یکی از سطوح زمانی را برای آزمون ۱۰ سوالی انتخاب کنید:
+      </p>
+
+      <input type="text" id="student-name-input" class="quiz-name-input" placeholder="نام و نام خانوادگی..." maxlength="30">
+
+      <div style="display:flex; flex-direction:column; gap:8px; margin-top:14px;">
+        <button type="button" class="mode-card-btn" onclick="initQuizWithMode(60, 3)">
+          <span>⚡ چالش سرعتی (۶۰ ثانیه برای هر سوال)</span>
+          <span style="color:#ec4899;">هر سوال ۳ امتیاز</span>
+        </button>
+        <button type="button" class="mode-card-btn" onclick="initQuizWithMode(90, 2)">
+          <span>⏱️ چالش متمرکز (۹۰ ثانیه برای هر سوال)</span>
+          <span style="color:#0284c7;">هر سوال ۲ امتیاز</span>
+        </button>
+        <button type="button" class="mode-card-btn" onclick="initQuizWithMode(0, 1)">
+          <span>🧘 حالت تمرینی (بدون محدودیت زمانی)</span>
+          <span style="color:#10b981;">هر سوال ۱ امتیاز</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="glass-card" id="quiz-play-card" style="display:none;">
+      <div class="quiz-header">
+        <span id="quiz-student-badge" style="color:var(--color-comp); font-weight:800;">دانش‌آموز: -</span>
+        <span id="quiz-timer-box" class="quiz-timer-badge safe" style="display:none;">⏳ زمان: --</span>
+      </div>
+      <div class="progress-container">
+        <div class="progress-bar" id="quiz-progress-bar"></div>
+      </div>
+      <div style="display:flex; justify-content:space-between; font-size:0.82rem; font-weight:bold; margin-bottom:8px;">
+        <span id="quiz-counter-text">سوال ۱ از ۱۰</span>
+        <span id="quiz-score-text" style="color:var(--color-union);">امتیاز: ۰</span>
+      </div>
+      <div class="quiz-q-box" id="quiz-question-text">در حال بارگذاری سوال...</div>
+      <div class="quiz-options" id="quiz-options-container"></div>
+      <div class="quiz-feedback" id="quiz-feedback-box"></div>
+      <button type="button" class="quiz-next-btn" id="quiz-next-btn" onclick="nextQuizQuestion()">سوال بعدی ›</button>
+    </div>
+    <div class="footer-credit">تنظیم شده توسط زینب صفری</div>
+  </div>
+
+</div>
+
+<script>
+/* ============================================================
+   ROUTING & THEME
+============================================================ */
+function showView(id) {
+  try {
+    const views = document.querySelectorAll('.view');
+    views.forEach(v => v.classList.remove('active'));
+    const target = document.getElementById('view-' + id);
+    if (target) target.classList.add('active');
+    window.scrollTo(0, 0);
+
+    if (id === 'complement') {
+      onEndpointChange('u');
+      onEndpointChange('b');
+      dynDraw(dynState.show);
+    }
+    if (id === 'venn2') selectLabOp(currentLabOp);
+    if (id === 'venn3') selectVenn3Op(currentVenn3Op);
+    if (id === 'flashcards') renderFlashcard();
+    if (id === 'quiz') resetQuizToSetup();
+  } catch (err) {
+    console.error("View navigation error:", err);
+  }
+}
+
+function toggleTheme() {
+  const root = document.documentElement;
+  const btn = document.getElementById('theme-toggle');
+  if (root.getAttribute('data-theme') === 'dark') {
+      root.removeAttribute('data-theme');
+      if (btn) btn.innerText = '🌙'; 
+  } else {
+      root.setAttribute('data-theme', 'dark');
+      if (btn) btn.innerText = '☀️'; 
+  }
+  const compView = document.getElementById('view-complement');
+  if(compView && compView.classList.contains('active')) dynDraw(dynState.show);
+}
+
+function fa(n) {
+  const d = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+  let str = String(n).replace(/[0-9]/g, x => d[x]);
+  if (str.includes('-')) {
+    str = str.replace('-', '−'); 
+    return '\u202D' + str + '\u202C';
+  }
+  return str;
+}
+
+function parseVal(id, defaultVal) {
+  const el = document.getElementById(id);
+  if (!el) return defaultVal;
+  let str = el.value.trim().replace(/[−–—]/g, '-');
+  let num = parseFloat(str);
+  return isNaN(num) ? defaultVal : num;
+}
+
+function validateAndDraw(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    let clean = el.value.replace(/[−–—]/g, '-').replace(/[^0-9.-]/g, '');
+    el.value = clean;
+  }
+  dynDraw(dynState.show);
+}
+
+/* ============================================================
+   MODULE: VENN 2 & 3
+============================================================ */
+let currentLabOp = 'union';
+let currentDistance = 120;
+
+function updateCircleDistance(val) {
+    currentDistance = parseInt(val) || 120;
+    const bX = 190 + currentDistance;
+    const setAttr = (id, attr, v) => document.getElementById(id)?.setAttribute(attr, v);
+    setAttr('outline-b', 'cx', bX);
+    setAttr('lab-onlyB', 'cx', bX);
+    setAttr('lab-intersection', 'cx', bX);
+    setAttr('m-circle-b', 'cx', bX);
+    setAttr('label-b-pos', 'x', bX + 60);
+
+    let statusText = "متداخل";
+    if(currentDistance >= 190) statusText = "مجزا (بدون اشتراک)"; 
+    else if(currentDistance <= 15) statusText = "منطبق (زیرمجموعه)"; 
+    
+    const statusEl = document.getElementById('slider-status-text');
+    if(statusEl) statusEl.innerText = statusText;
+    selectLabOp(currentLabOp);
+}
+
+function applyHighlights(prefix, config) {
+    ['onlyA', 'intersection', 'onlyB', 'outside'].forEach(id => {
+        document.getElementById(`${prefix}-${id}`)?.classList.remove('hl-a', 'hl-b', 'hl-int', 'hl-union', 'hl-sym', 'hl-comp', 'hl-diff');
+    });
+    const colorClass = `hl-${config.type}`;
+    if(config.onlyA) document.getElementById(`${prefix}-onlyA`)?.classList.add(colorClass);
+    if(config.onlyB) document.getElementById(`${prefix}-onlyB`)?.classList.add(colorClass);
+    if(config.intersection) document.getElementById(`${prefix}-intersection`)?.classList.add(colorClass);
+    if(config.outside) document.getElementById(`${prefix}-outside`)?.classList.add(colorClass);
+}
+
+function selectLabOp(op, btn) {
+    if(btn) { 
+      document.querySelectorAll('#view-venn2 .op-btn').forEach(b => b.classList.remove('active')); 
+      btn.classList.add('active'); 
+    }
+    currentLabOp = op || currentLabOp;
+    let config = { onlyA: false, intersection: false, onlyB: false, outside: false, type: 'a' };
+    let isDisjoint = currentDistance >= 190;
+    let captionText = "";
+
+    switch(currentLabOp) {
+        case 'A': config.onlyA = true; config.intersection = !isDisjoint; config.type = 'a'; captionText = "تمام اعضای متعلق به <b>مجموعه A</b>."; break;
+        case 'B': config.onlyB = true; config.intersection = !isDisjoint; config.type = 'b'; captionText = "تمام اعضای متعلق به <b>مجموعه B</b>."; break;
+        case 'union': config.onlyA = true; config.intersection = true; config.onlyB = true; config.type = 'union'; captionText = "<b>اجتماع (<span class='math-expr' dir='ltr'>A ∪ B</span>):</b> اعضایی که در A یا در B هستند."; break;
+        case 'intersection': config.intersection = !isDisjoint; config.type = 'int'; captionText = isDisjoint ? "دو مجموعه مجزا هستند؛ <b>اشتراک تهی است (∅)</b>." : "<b>اشتراک (<span class='math-expr' dir='ltr'>A ∩ B</span>):</b> اعضای مشترک."; break;
+        case 'diffA': config.onlyA = true; config.type = 'a'; captionText = "<b>تفاضل (<span class='math-expr' dir='ltr'>A - B</span>):</b> اعضایی که در A هستند ولی در B نیستند."; break;
+        case 'diffB': config.onlyB = true; config.type = 'b'; captionText = "<b>تفاضل (<span class='math-expr' dir='ltr'>B - A</span>):</b> اعضایی که در B هستند ولی در A نیستند."; break;
+        case 'symDiff': config.onlyA = true; config.onlyB = true; config.type = 'sym'; captionText = "<b>تفاضل متقارن (<span class='math-expr' dir='ltr'>A Δ B</span>):</b> فقط در یکی از دو مجموعه."; break;
+        case 'compA': config.onlyB = true; config.outside = true; config.type = 'a'; captionText = "<b>متمم A (<span class='math-expr' dir='ltr'>A'</span>):</b> کل مرجع به جز A."; break;
+        case 'compB': config.onlyA = true; config.outside = true; config.type = 'b'; captionText = "<b>متمم B (<span class='math-expr' dir='ltr'>B'</span>):</b> کل مرجع به جز B."; break;
+        case 'compUnion': config.outside = true; config.type = 'union'; captionText = "<b>متمم اجتماع:</b> بیرون از هر دو دایره."; break;
+        case 'compIntersection': config.onlyA = true; config.onlyB = true; config.outside = true; config.type = 'diff'; captionText = "<b>متمم اشتراک:</b> کل فضا به جز اشتراک مشترک."; break;
+    }
+    applyHighlights('lab', config);
+    const capEl = document.getElementById('venn2-caption');
+    if(capEl) capEl.innerHTML = captionText;
+}
+
+let currentVenn3Op = 'union';
+const v3Regions = ['onlyA-final', 'onlyB-final', 'onlyC-final', 'ab-final', 'ac-final', 'bc-final', 'abc-final', 'outside'];
+const v3HighlightClasses = ['hl-a', 'hl-b', 'hl-c', 'hl-union', 'hl-int', 'hl-sym', 'hl-diff', 'hl-comp'];
+
+function clearVenn3Highlights() {
+    v3Regions.forEach(id => {
+        const el = document.getElementById(`reg-${id}`);
+        if (el) el.classList.remove(...v3HighlightClasses);
+    });
+}
+
+function highlightVenn3(activeIds, colorClass) {
+    clearVenn3Highlights();
+    activeIds.forEach(id => {
+        const el = document.getElementById(`reg-${id}`);
+        if (el) el.classList.add(colorClass);
+    });
+}
+
+function selectVenn3Op(op, btn) {
+    if(btn) {
+        document.querySelectorAll('#view-venn3 .op-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+    currentVenn3Op = op || currentVenn3Op;
+    let capText = "";
+    switch(currentVenn3Op) {
+        case 'A': highlightVenn3(['onlyA-final', 'ab-final', 'ac-final', 'abc-final'], 'hl-a'); capText = "اعضای متعلق به <b>مجموعه A</b>."; break;
+        case 'B': highlightVenn3(['onlyB-final', 'ab-final', 'bc-final', 'abc-final'], 'hl-b'); capText = "اعضای متعلق به <b>مجموعه B</b>."; break;
+        case 'C': highlightVenn3(['onlyC-final', 'ac-final', 'bc-final', 'abc-final'], 'hl-c'); capText = "اعضای متعلق به <b>مجموعه C</b>."; break;
+        case 'union': highlightVenn3(['onlyA-final', 'onlyB-final', 'onlyC-final', 'ab-final', 'ac-final', 'bc-final', 'abc-final'], 'hl-union'); capText = "<b>اجتماع ۳ مجموعه (<span class='math-expr' dir='ltr'>A ∪ B ∪ C</span>)</b>"; break;
+        case 'inter3': highlightVenn3(['abc-final'], 'hl-int'); capText = "<b>اشتراک هر ۳ مجموعه (<span class='math-expr' dir='ltr'>A ∩ B ∩ C</span>)</b>"; break;
+        case 'interAB': highlightVenn3(['ab-final', 'abc-final'], 'hl-int'); capText = "<b>اشتراک A و B (<span class='math-expr' dir='ltr'>A ∩ B</span>)</b>"; break;
+        case 'interAC': highlightVenn3(['ac-final', 'abc-final'], 'hl-int'); capText = "<b>اشتراک A و C (<span class='math-expr' dir='ltr'>A ∩ C</span>)</b>"; break;
+        case 'interBC': highlightVenn3(['bc-final', 'abc-final'], 'hl-int'); capText = "<b>اشتراک B و C (<span class='math-expr' dir='ltr'>B ∩ C</span>)</b>"; break;
+        case 'diffAB': highlightVenn3(['onlyA-final', 'ac-final'], 'hl-diff'); capText = "<b>تفاضل (<span class='math-expr' dir='ltr'>A - B</span>)</b>"; break;
+        case 'diffA_BC': highlightVenn3(['onlyA-final'], 'hl-diff'); capText = "<b>فقط در A و بیرون از B و C</b>"; break;
+        case 'symDiff': highlightVenn3(['onlyA-final', 'onlyB-final', 'onlyC-final', 'abc-final'], 'hl-sym'); capText = "<b>تفاضل متقارن ۳ مجموعه</b>"; break;
+        case 'compUnion': highlightVenn3(['outside'], 'hl-comp'); capText = "<b>متمم اجتماع سه مجموعه</b>"; break;
+    }
+    const capEl = document.getElementById('venn3-caption');
+    if(capEl) capEl.innerHTML = capText;
+}
+
+/* ============================================================
+   MODULE: COMPLEMENT (کارگاه متمم)
+============================================================ */
+let dynState = {
+  refMode: 'R', // 'R', 'Z', 'N', 'interval'
+  show: 'B'
+};
+
+function onEndpointChange(prefix) {
+  const typeL = document.getElementById(`${prefix}-type-left`).value;
+  const typeR = document.getElementById(`${prefix}-type-right`).value;
+  const valL = document.getElementById(`${prefix}-val-left`);
+  const valR = document.getElementById(`${prefix}-val-right`);
+  const bL = document.getElementById(`${prefix}-bracket-left`);
+  const bR = document.getElementById(`${prefix}-bracket-right`);
+
+  if (typeL === '-inf') {
+    valL.style.display = 'none';
+    bL.value = '(';
+    bL.disabled = true;
+  } else {
+    valL.style.display = 'inline-block';
+    bL.disabled = false;
+  }
+
+  if (typeR === '+inf') {
+    valR.style.display = 'none';
+    bR.value = ')';
+    bR.disabled = true;
+  } else {
+    valR.style.display = 'inline-block';
+    bR.disabled = false;
+  }
+
+  if (prefix === 'u') {
+    if (dynState.refMode !== 'Z' && dynState.refMode !== 'N') {
+      document.querySelectorAll('.quick-pill').forEach(p => p.classList.remove('active'));
+      if (typeL === '-inf' && typeR === '+inf') {
+        dynState.refMode = 'R';
+        document.getElementById('pill-u-R')?.classList.add('active');
+      } else {
+        dynState.refMode = 'interval';
+      }
+    }
+  }
+
+  dynDraw(dynState.show);
+}
+
+function setPresetU(preset) {
+  document.querySelectorAll('.quick-pill').forEach(p => p.classList.remove('active'));
+  document.getElementById(`pill-u-${preset}`)?.classList.add('active');
+
+  dynState.refMode = preset;
+  
+  if (preset === 'R' || preset === 'Z') {
+    document.getElementById('u-type-left').value = '-inf';
+    document.getElementById('u-type-right').value = '+inf';
+  } else if (preset === 'N') {
+    document.getElementById('u-type-left').value = 'num';
+    document.getElementById('u-val-left').value = 1;
+    document.getElementById('u-bracket-left').value = '[';
+    document.getElementById('u-type-right').value = '+inf';
+  } else if (preset === 'pos') {
+    dynState.refMode = 'interval';
+    document.getElementById('u-type-left').value = 'num';
+    document.getElementById('u-val-left').value = 0;
+    document.getElementById('u-bracket-left').value = '[';
+    document.getElementById('u-type-right').value = '+inf';
+  }
+
+  const typeL = document.getElementById('u-type-left').value;
+  const typeR = document.getElementById('u-type-right').value;
+  const valL = document.getElementById('u-val-left');
+  const valR = document.getElementById('u-val-right');
+  const bL = document.getElementById('u-bracket-left');
+  const bR = document.getElementById('u-bracket-right');
+  
+  valL.style.display = (typeL === '-inf') ? 'none' : 'inline-block';
+  bL.disabled = (typeL === '-inf');
+  if (typeL === '-inf') bL.value = '(';
+
+  valR.style.display = (typeR === '+inf') ? 'none' : 'inline-block';
+  bR.disabled = (typeR === '+inf');
+  if (typeR === '+inf') bR.value = ')';
+
+  dynDraw(dynState.show);
+}
+
+function setPresetB(preset) {
+  if (preset === 'bounded') {
+    document.getElementById('b-type-left').value = 'num';
+    document.getElementById('b-val-left').value = -3;
+    document.getElementById('b-bracket-left').value = '[';
+    document.getElementById('b-type-right').value = 'num';
+    document.getElementById('b-val-right').value = 4;
+    document.getElementById('b-bracket-right').value = ']';
+  } else if (preset === 'rayRight') {
+    document.getElementById('b-type-left').value = 'num';
+    document.getElementById('b-val-left').value = 2;
+    document.getElementById('b-bracket-left').value = '[';
+    document.getElementById('b-type-right').value = '+inf';
+  } else if (preset === 'rayLeft') {
+    document.getElementById('b-type-left').value = '-inf';
+    document.getElementById('b-type-right').value = 'num';
+    document.getElementById('b-val-right').value = 3;
+    document.getElementById('b-bracket-right').value = ']';
+  }
+  onEndpointChange('b');
+}
+
+function dynDraw(show) {
+  dynState.show = show;
+  document.getElementById('btn-dyn-B')?.classList.toggle('active', show === 'B');
+  document.getElementById('btn-dyn-Bcomp')?.classList.toggle('active', show === 'Bcomp');
+
+  const uTypeL = document.getElementById('u-type-left').value;
+  const uTypeR = document.getElementById('u-type-right').value;
+  let uValL = parseVal('u-val-left', -10);
+  let uValR = parseVal('u-val-right', 10);
+  if (uTypeL === 'num' && uTypeR === 'num' && uValL > uValR) { let t = uValL; uValL = uValR; uValR = t; }
+  const uBrackL = document.getElementById('u-bracket-left').value;
+  const uBrackR = document.getElementById('u-bracket-right').value;
+
+  const bTypeL = document.getElementById('b-type-left').value;
+  const bTypeR = document.getElementById('b-type-right').value;
+  let bValL = parseVal('b-val-left', -3);
+  let bValR = parseVal('b-val-right', 4);
+  if (bTypeL === 'num' && bTypeR === 'num' && bValL > bValR) { let t = bValL; bValL = bValR; bValR = t; }
+  const bBrackL = document.getElementById('b-bracket-left').value;
+  const bBrackR = document.getElementById('b-bracket-right').value;
+
+  let anchorNums = [];
+  if (uTypeL === 'num' && dynState.refMode === 'interval') anchorNums.push(uValL);
+  if (uTypeR === 'num' && dynState.refMode === 'interval') anchorNums.push(uValR);
+  if (bTypeL === 'num') anchorNums.push(bValL);
+  if (bTypeR === 'num') anchorNums.push(bValR);
+  if (dynState.refMode === 'N') anchorNums.push(1, 6);
+
+  let vMin = -7, vMax = 7;
+  if (anchorNums.length > 0) {
+    let minA = Math.min(...anchorNums);
+    let maxA = Math.max(...anchorNums);
+    let span = Math.max(maxA - minA, 4);
+    vMin = minA - Math.max(2.5, span * 0.25);
+    vMax = maxA + Math.max(2.5, span * 0.25);
+  }
+
+  const svg = document.getElementById('dyn-svg');
+  if(!svg) return;
+
+  const Y_Axis = 110; 
+  const Y_Comp = 45;  
+  const pxLeft = 50, pxRight = 750;
+  function xP(val) { return pxLeft + ((val - vMin) / (vMax - vMin)) * (pxRight - pxLeft); }
+
+  const compColor = getComputedStyle(document.documentElement).getPropertyValue('--color-comp').trim() || '#ec4899';
+  const axisColor = getComputedStyle(document.documentElement).getPropertyValue('--axis-line').trim() || '#9d174d';
+  const svgText = getComputedStyle(document.documentElement).getPropertyValue('--svg-text').trim() || '#4a044e';
+  const colorB_Purple = getComputedStyle(document.documentElement).getPropertyValue('--color-interval-b').trim() || '#8b5cf6';
+  const uBoundColor = getComputedStyle(document.documentElement).getPropertyValue('--color-u-bounded').trim() || '#0284c7';
+
+  let inner = `
+    <defs>
+      <marker id="arrowL" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto"><path d="M6,0 L0,3 L6,6 Z" fill="${compColor}"/></marker>
+      <marker id="arrowR" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="${compColor}"/></marker>
+      <marker id="arrowB_L" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto"><path d="M6,0 L0,3 L6,6 Z" fill="${colorB_Purple}"/></marker>
+      <marker id="arrowB_R" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="${colorB_Purple}"/></marker>
+      <marker id="arrowAxisL" markerWidth="6" markerHeight="6" refX="2" refY="3" orient="auto"><path d="M6,0 L0,3 L6,6 Z" fill="${axisColor}"/></marker>
+      <marker id="arrowAxisR" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="${axisColor}"/></marker>
+    </defs>
+    <line x1="${pxLeft-10}" y1="${Y_Axis}" x2="${pxRight+10}" y2="${Y_Axis}" stroke="${axisColor}" stroke-width="2.5" marker-start="url(#arrowAxisL)" marker-end="url(#arrowAxisR)"/>
+  `;
+
+  let step = 1;
+  let range = vMax - vMin;
+  if (range > 20) step = Math.ceil(range / 15);
+  let startTick = Math.floor(vMin / step) * step;
+  for (let t = startTick; t <= vMax; t += step) {
+    if(t < vMin) continue;
+    let x = xP(t);
+    inner += `<line x1="${x}" y1="${Y_Axis-5}" x2="${x}" y2="${Y_Axis+5}" stroke="${axisColor}" stroke-width="1.5"/>`;
+    inner += `<text x="${x}" y="${Y_Axis+24}" text-anchor="middle" font-size="13" fill="${svgText}" font-family="monospace">${fa(t)}</text>`;
+  }
+
+  let isContinuous = (dynState.refMode === 'R' || dynState.refMode === 'interval');
+
+  if (isContinuous) {
+    // ۱. رسم بازه دلخواه مرجع U
+    if (dynState.refMode === 'interval') {
+      let ux1 = (uTypeL === '-inf') ? pxLeft - 10 : xP(uValL);
+      let ux2 = (uTypeR === '+inf') ? pxRight + 10 : xP(uValR);
+      inner += `<line x1="${ux1}" y1="${Y_Axis+36}" x2="${ux2}" y2="${Y_Axis+36}" stroke="${uBoundColor}" stroke-width="3" stroke-dasharray="6,4"/>`;
+      if (uTypeL === 'num') inner += `<circle cx="${xP(uValL)}" cy="${Y_Axis+36}" r="5" fill="${uBrackL==='['?uBoundColor:'white'}" stroke="${uBoundColor}" stroke-width="2"/>`;
+      if (uTypeR === 'num') inner += `<circle cx="${xP(uValR)}" cy="${Y_Axis+36}" r="5" fill="${uBrackR===']'?uBoundColor:'white'}" stroke="${uBoundColor}" stroke-width="2"/>`;
+      inner += `<text x="${(ux1+ux2)/2}" y="${Y_Axis+54}" text-anchor="middle" font-size="12" font-weight="bold" fill="${uBoundColor}">مرجع U</text>`;
+    }
+
+    // ۲. رسم بازه B به رنگ بنفش
+    let bx1 = (bTypeL === '-inf') ? pxLeft - 10 : xP(bValL);
+    let bx2 = (bTypeR === '+inf') ? pxRight + 10 : xP(bValR);
+    let bmStart = (bTypeL === '-inf') ? 'marker-start="url(#arrowB_L)"' : '';
+    let bmEnd = (bTypeR === '+inf') ? 'marker-end="url(#arrowB_R)"' : '';
+    let opB = (show === 'B') ? 1 : 0.45;
+
+    inner += `<line x1="${bx1}" y1="${Y_Axis}" x2="${bx2}" y2="${Y_Axis}" stroke="${colorB_Purple}" stroke-width="7" stroke-linecap="round" opacity="${opB}" ${bmStart} ${bmEnd}/>`;
+    inner += `<text x="${(bx1+bx2)/2}" y="${Y_Axis-14}" text-anchor="middle" font-size="13" font-weight="bold" fill="${colorB_Purple}" opacity="${opB}">مجموعه B</text>`;
+
+    if (bTypeL === 'num') {
+      let fillL = (bBrackL === '[') ? colorB_Purple : 'var(--bg-gradient)';
+      inner += `<circle cx="${xP(bValL)}" cy="${Y_Axis}" r="6" fill="${fillL}" stroke="${colorB_Purple}" stroke-width="3" opacity="${opB}"/>`;
+    }
+    if (bTypeR === 'num') {
+      let fillR = (bBrackR === ']') ? colorB_Purple : 'var(--bg-gradient)';
+      inner += `<circle cx="${xP(bValR)}" cy="${Y_Axis}" r="6" fill="${fillR}" stroke="${colorB_Purple}" stroke-width="3" opacity="${opB}"/>`;
+    }
+
+    // ۳. رسم متمم B' در طبقه بالا
+    if (show === 'Bcomp') {
+      inner += `<text x="${pxRight - 15}" y="${Y_Comp - 12}" text-anchor="end" font-size="13" font-weight="bold" fill="${compColor}">متمم (B') ↑</text>`;
+
+      if (bTypeL === 'num') {
+        let drawL = true;
+        let leftEnd = (uTypeL === '-inf' || dynState.refMode === 'R') ? pxLeft - 10 : xP(uValL);
+        let markL = (uTypeL === '-inf' || dynState.refMode === 'R') ? 'marker-end="url(#arrowL)"' : '';
+        if (dynState.refMode === 'interval' && uTypeL === 'num' && bValL <= uValL) drawL = false;
+
+        if (drawL) {
+          inner += `<line x1="${xP(bValL)}" y1="${Y_Axis}" x2="${xP(bValL)}" y2="${Y_Comp}" stroke="${compColor}" stroke-width="1.8" stroke-dasharray="4,4" opacity="0.6"/>`;
+          inner += `<line x1="${xP(bValL)}" y1="${Y_Comp}" x2="${leftEnd}" y2="${Y_Comp}" stroke="${compColor}" stroke-width="6" stroke-linecap="round" class="draw-line" ${markL}/>`;
+          let dotFillL = (bBrackL === '[') ? 'var(--bg-gradient)' : compColor;
+          inner += `<circle cx="${xP(bValL)}" cy="${Y_Comp}" r="6" fill="${dotFillL}" stroke="${compColor}" stroke-width="3" class="fade-dot"/>`;
+          if (dynState.refMode === 'interval' && uTypeL === 'num') {
+            let uDotFill = (uBrackL === '[') ? compColor : 'var(--bg-gradient)';
+            inner += `<circle cx="${xP(uValL)}" cy="${Y_Comp}" r="6" fill="${uDotFill}" stroke="${compColor}" stroke-width="3" class="fade-dot"/>`;
+          }
+        }
+      }
+
+      if (bTypeR === 'num') {
+        let drawR = true;
+        let rightEnd = (uTypeR === '+inf' || dynState.refMode === 'R') ? pxRight + 10 : xP(uValR);
+        let markR = (uTypeR === '+inf' || dynState.refMode === 'R') ? 'marker-end="url(#arrowR)"' : '';
+        if (dynState.refMode === 'interval' && uTypeR === 'num' && bValR >= uValR) drawR = false;
+
+        if (drawR) {
+          inner += `<line x1="${xP(bValR)}" y1="${Y_Axis}" x2="${xP(bValR)}" y2="${Y_Comp}" stroke="${compColor}" stroke-width="1.8" stroke-dasharray="4,4" opacity="0.6"/>`;
+          inner += `<line x1="${xP(bValR)}" y1="${Y_Comp}" x2="${rightEnd}" y2="${Y_Comp}" stroke="${compColor}" stroke-width="6" stroke-linecap="round" class="draw-line" ${markR}/>`;
+          let dotFillR = (bBrackR === ']') ? 'var(--bg-gradient)' : compColor;
+          inner += `<circle cx="${xP(bValR)}" cy="${Y_Comp}" r="6" fill="${dotFillR}" stroke="${compColor}" stroke-width="3" class="fade-dot"/>`;
+          if (dynState.refMode === 'interval' && uTypeR === 'num') {
+            let uDotFillR = (uBrackR === ']') ? compColor : 'var(--bg-gradient)';
+            inner += `<circle cx="${xP(uValR)}" cy="${Y_Comp}" r="6" fill="${uDotFillR}" stroke="${compColor}" stroke-width="3" class="fade-dot"/>`;
+          }
+        }
+      }
+    }
+  } else {
+    // ================= حالت گسسته برای Z یا N =================
+    let zStart = Math.ceil(vMin);
+    let zEnd = Math.floor(vMax);
+    let opacityB = (show === 'B') ? 1 : 0.45;
+
+    for (let i = zStart; i <= zEnd; i++) {
+       let inU = (dynState.refMode === 'N') ? (i >= 1) : true;
+       let inB = true;
+
+       if (bTypeL === 'num') {
+         if (i < bValL) inB = false;
+         if (i === bValL && bBrackL === '(') inB = false;
+       }
+       if (bTypeR === 'num') {
+         if (i > bValR) inB = false;
+         if (i === bValR && bBrackR === ')') inB = false;
+       }
+
+       if (!inU) {
+         inner += `<circle cx="${xP(i)}" cy="${Y_Axis}" r="4" fill="none" stroke="${axisColor}" stroke-width="1.5" opacity="0.3"/>`;
+       } else if (inB) {
+         inner += `<circle cx="${xP(i)}" cy="${Y_Axis}" r="7" fill="${colorB_Purple}" opacity="${opacityB}"/>`;
+       } else if (show === 'Bcomp') {
+         inner += `<line x1="${xP(i)}" y1="${Y_Axis}" x2="${xP(i)}" y2="${Y_Comp}" stroke="${compColor}" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.4"/>`;
+         inner += `<circle cx="${xP(i)}" cy="${Y_Comp}" r="7" fill="${compColor}" class="fade-dot"/>`;
+       }
+    }
+
+    if (show === 'B') {
+      inner += `<text x="${pxRight - 15}" y="${Y_Axis - 18}" text-anchor="end" font-size="13" font-weight="bold" fill="${colorB_Purple}">نقاط مجموعه B (گسسته) •</text>`;
+    } else {
+      inner += `<text x="${pxRight - 15}" y="${Y_Comp - 12}" text-anchor="end" font-size="13" font-weight="bold" fill="${compColor}">نقاط متمم (B') ↑</text>`;
+    }
+  }
+
+  svg.innerHTML = inner;
+
+  if (show === 'Bcomp') {
+    setTimeout(() => {
+      document.querySelectorAll('.draw-line').forEach(el => el.classList.add('animate'));
+      document.querySelectorAll('.fade-dot').forEach(el => el.classList.add('animate'));
+    }, 30);
+  }
+
+  updateMathCaption(uTypeL, uTypeR, uValL, uValR, uBrackL, uBrackR, bTypeL, bTypeR, bValL, bValR, bBrackL, bBrackR);
+}
+
+// تولید دوخطی و بسیار خوانای زیرنویس ریاضی
+function updateMathCaption(uTL, uTR, uVL, uVR, uBL, uBR, bTL, bTR, bVL, bVR, bBL, bBR) {
+  const line1 = document.getElementById('dyn-caption-line1');
+  const line2 = document.getElementById('dyn-caption-line2');
+  const faCap = document.getElementById('dyn-caption-fa');
+  if(!line1 || !line2 || !faCap) return;
+
+  const colorB_Purple = 'var(--color-interval-b)';
+  const colorComp = 'var(--color-comp)';
+
+  let bStr = `${bBL} ${bTL === '-inf' ? '-∞' : fa(bVL)} , ${bTR === '+inf' ? '+∞' : fa(bVR)} ${bBR}`;
+  let refName = (dynState.refMode === 'R') ? 'ℝ' : (dynState.refMode === 'Z' ? 'ℤ' : (dynState.refMode === 'N' ? 'ℕ' : 'U'));
+
+  if (dynState.show === 'B') {
+    if (dynState.refMode === 'Z' || dynState.refMode === 'N') {
+      let zStart = (bTL === 'num') ? (bBL === '[' ? Math.ceil(bVL) : Math.floor(bVL) + 1) : -999;
+      let zEnd = (bTR === 'num') ? (bBR === ']' ? Math.floor(bVR) : Math.ceil(bVR) - 1) : 999;
+      if (dynState.refMode === 'N') zStart = Math.max(1, zStart);
+
+      let bItems = [];
+      if (zStart <= zEnd) {
+        let maxShow = Math.min(zEnd, zStart + 5);
+        for (let i = zStart; i <= maxShow; i++) bItems.push(fa(i));
+        if (zEnd > maxShow || bTR === '+inf') bItems.push('...');
+      }
+      let bList = bItems.length > 0 ? `{ ${bItems.join(' , ')} }` : '∅';
+
+      // خط اول: تعریف نمادین مجموعه‌ساز
+      line1.innerHTML = `B = { x ∈ ${refName} | x ∈ ${bStr} }`;
+      // خط دوم: لیست اعضا با رنگ بنفش و فونت بزرگتر
+      line2.innerHTML = `= <span style="color:${colorB_Purple};">${bList}</span>`;
+      faCap.innerHTML = `مجموعه مرجع انتخابی: <b>${refName} (گسسته)</b> است؛ اعضا به صورت نقطه‌ای نمایش داده شدند.`;
+    } else {
+      line1.innerHTML = `B = { x ∈ ${refName} | x ∈ ${bStr} }`;
+      line2.innerHTML = `= <span style="color:${colorB_Purple};">${bStr}</span>`;
+      faCap.innerHTML = `مجموعه مرجع انتخابی: <b>${refName}</b> است.`;
+    }
+  } else {
+    // وضعیت نمایش متمم
+    let compStr = "";
+    if (dynState.refMode === 'Z' || dynState.refMode === 'N') {
+      let zStart = (bTL === 'num') ? (bBL === '[' ? Math.ceil(bVL) : Math.floor(bVL) + 1) : -999;
+      let zEnd = (bTR === 'num') ? (bBR === ']' ? Math.floor(bVR) : Math.ceil(bVR) - 1) : 999;
+
+      if (dynState.refMode === 'Z') {
+        if (bTL === '-inf' && bTR === '+inf') compStr = '∅';
+        else if (bTL === '-inf') compStr = `{ ${fa(zEnd + 1)} , ${fa(zEnd + 2)} , ... }`;
+        else if (bTR === '+inf') compStr = `{ ... , ${fa(zStart - 2)} , ${fa(zStart - 1)} }`;
+        else compStr = `{ ... , ${fa(zStart - 1)} } ∪ { ${fa(zEnd + 1)} , ... }`;
+      } else { // N
+        if (bTL === '-inf' && bTR === '+inf') compStr = '∅';
+        else if (bTR === '+inf') {
+          let items = [];
+          for (let k = 1; k < zStart; k++) items.push(fa(k));
+          compStr = items.length > 0 ? `{ ${items.join(' , ')} }` : '∅';
+        } else if (bTL === '-inf') {
+          compStr = `{ ${fa(Math.max(1, zEnd + 1))} , ${fa(Math.max(2, zEnd + 2))} , ... }`;
+        } else {
+          let leftItems = [];
+          for (let k = 1; k < zStart; k++) leftItems.push(fa(k));
+          let leftStr = leftItems.length > 0 ? `{ ${leftItems.join(' , ')} } ∪ ` : '';
+          compStr = `${leftStr}{ ${fa(zEnd + 1)} , ${fa(zEnd + 2)} , ... }`;
+        }
+      }
+    } else {
+      let parts = [];
+      if (bTL === 'num') {
+        let flippedL = (bBL === '[') ? ')' : ']';
+        if (uTL === '-inf' || dynState.refMode === 'R') parts.push(`(-∞ , ${fa(bVL)}${flippedL}`);
+        else if (bVL > uVL) parts.push(`${uBL}${fa(uVL)} , ${fa(bVL)}${flippedL}`);
+      }
+      if (bTR === 'num') {
+        let flippedR = (bBR === ']') ? '(' : '[';
+        if (uTR === '+inf' || dynState.refMode === 'R') parts.push(`${flippedR}${fa(bVR)} , +∞)`);
+        else if (bVR < uVR) parts.push(`${flippedR}${fa(bVR)} , ${fa(uVR)}${uBR}`);
+      }
+      compStr = parts.length > 0 ? parts.join(' ∪ ') : '∅';
+    }
+
+    line1.innerHTML = `B' = ${refName} - B`;
+    line2.innerHTML = `= <span style="color:${colorComp};">${compStr}</span>`;
+    faCap.innerHTML = (dynState.refMode === 'Z' || dynState.refMode === 'N') 
+      ? `چون مرجع <b>${refName}</b> گسسته است، نقاط غایب در طبقه بالا مشخص شدند.` 
+      : "💡 متمم در طبقه بالا رسم شد. نقاط توپر و توخالی دقیقاً معکوس مجموعه اصلی است.";
+  }
+}
+
+/* ============================================================
+   MODULE: FLASHCARDS
+============================================================ */
+const flashcardsData = [
+  { q: "حاصل <span class='math-expr' dir='ltr'>A ∪ A</span> چیست؟", a: "<span class='math-expr' dir='ltr'>A</span>", desc: "ویژگی ۱: اجتماع هر مجموعه با خودش، برابر خود آن مجموعه است." },
+  { q: "حاصل <span class='math-expr' dir='ltr'>A ∩ A</span> چیست؟", a: "<span class='math-expr' dir='ltr'>A</span>", desc: "ویژگی ۲: اشتراک هر مجموعه با خودش، برابر خود آن مجموعه است." },
+  { q: "حاصل <span class='math-expr' dir='ltr'>A - A</span> چیست؟", a: "<span class='math-expr' dir='ltr'>∅</span>", desc: "ویژگی ۳: تفاضل هر مجموعه از خودش، هیچ عضوی باقی نمی‌گذارد." },
+  { q: "حاصل <span class='math-expr' dir='ltr'>(A')'</span> یعنی متممِ متمم چیست؟", a: "<span class='math-expr' dir='ltr'>A</span>", desc: "ویژگی ۴: متممِ متمم هر مجموعه برابر با خود همان مجموعه است." },
+  { q: "متمم مجموعه مرجع (<span class='math-expr' dir='ltr'>U'</span>) چیست؟", a: "<span class='math-expr' dir='ltr'>∅</span>", desc: "ویژگی ۵: بیرون از کل فضای مرجع، هیچ عضوی وجود ندارد." },
+  { q: "حاصل <span class='math-expr' dir='ltr'>A ∩ U</span> چیست؟", a: "<span class='math-expr' dir='ltr'>A</span>", desc: "ویژگی ۶: اشتراک هر مجموعه با مرجع خود، کل همان مجموعه است." },
+  { q: "حاصل <span class='math-expr' dir='ltr'>A ∪ U</span> چیست؟", a: "<span class='math-expr' dir='ltr'>U</span>", desc: "ویژگی ۷: اجتماع هر مجموعه با مرجع، کل فضای مرجع U می‌شود." },
+  { q: "حاصل تفاضل مرجع از مجموعه (<span class='math-expr' dir='ltr'>U - A</span>) چیست؟", a: "<span class='math-expr' dir='ltr'>A'</span>", desc: "ویژگی ۸: تعریف اصلی متمم یعنی اعضایی از U که در A نیستند." },
+  { q: "حاصل تفاضل <span class='math-expr' dir='ltr'>A - U</span> چیست؟", a: "<span class='math-expr' dir='ltr'>∅</span>", desc: "ویژگی ۹: چون تمام اعضای A در U هستند، عضوی باقی نمی‌ماند." },
+  { q: "متمم مجموعه تهی (<span class='math-expr' dir='ltr'>∅'</span>) چیست؟", a: "<span class='math-expr' dir='ltr'>U</span>", desc: "ویژگی ۱۰: تمام اعضای موجود در مرجع که تهی نیستند، یعنی کل U." },
+  { q: "حاصل <span class='math-expr' dir='ltr'>A ∪ ∅</span> چیست؟", a: "<span class='math-expr' dir='ltr'>A</span>", desc: "ویژگی ۱۱: اجتماع با تهی، عضو جدیدی اضافه نمی‌کند." },
+  { q: "حاصل <span class='math-expr' dir='ltr'>A ∩ ∅</span> چیست؟", a: "<span class='math-expr' dir='ltr'>∅</span>", desc: "ویژگی ۱۲: هیچ عضو مشترکی با تهی وجود ندارد." },
+  { q: "حاصل <span class='math-expr' dir='ltr'>A - ∅</span> چیست؟", a: "<span class='math-expr' dir='ltr'>A</span>", desc: "ویژگی ۱۳: کم کردن تهی هیچ اثری ندارد." },
+  { q: "قوانین دِ مورگان را بیان کنید.", a: "<span class='math-expr' dir='ltr'>(A ∪ B)' = A' ∩ B'</span><br><span class='math-expr' dir='ltr'>(A ∩ B)' = A' ∪ B'</span>", desc: "ویژگی ۱۴: تبدیل متمم اجتماع به اشتراک متمم‌ها و برعکس." },
+  { q: "اگر <span class='math-expr' dir='ltr'>A ⊆ B</span> باشد رابطه متمم‌ها چیست؟", a: "<span class='math-expr' dir='ltr'>B' ⊆ A'</span>", desc: "ویژگی ۱۵: در متمم‌گیری جهت زیرمجموعه معکوس می‌شود." },
+  { q: "سه رابطه معادل برای تفاضل <span class='math-expr' dir='ltr'>A - B</span> بنویسید.", a: "<span class='math-expr' dir='ltr'>A ∩ B'</span><br><span class='math-expr' dir='ltr'>A - (A ∩ B)</span><br><span class='math-expr' dir='ltr'>B' - A'</span>", desc: "ویژگی ۱۶: تفاضل دو مجموعه با اشتراک اولی و متمم دومی هم‌ارز است." }
+];
+
+let fcIndex = 0;
+function renderFlashcard() {
+  const card = document.getElementById('fc-main-card');
+  card?.classList.remove('flipped');
+  const cur = flashcardsData[fcIndex];
+  document.getElementById('fc-counter-text').innerText = `${fa(fcIndex + 1)} از ${fa(flashcardsData.length)}`;
+  document.getElementById('fc-front-content').innerHTML = `
+    <div style="font-size:0.82rem; color:var(--color-comp); font-weight:bold; margin-bottom:6px;">ویژگی شماره ${fa(fcIndex + 1)}</div>
+    <div style="font-size:1.05rem; font-weight:800; line-height:1.6;">${cur.q}</div>
+  `;
+  document.getElementById('fc-back-content').innerHTML = `
+    <div class="math-expr" dir="ltr" style="font-size:1.2rem; font-weight:bold; color:var(--color-comp); margin-bottom:5px;">${cur.a}</div>
+    <div style="font-size:0.8rem; color:var(--text-secondary); line-height:1.6; font-weight:600;">${cur.desc}</div>
+  `;
+}
+function flipFlashcard() { document.getElementById('fc-main-card')?.classList.toggle('flipped'); }
+function nextFlashcard() { fcIndex = (fcIndex + 1) % flashcardsData.length; renderFlashcard(); }
+function prevFlashcard() { fcIndex = (fcIndex - 1 + flashcardsData.length) % flashcardsData.length; renderFlashcard(); }
+
+/* ============================================================
+   MODULE: QUIZ ENGINE
+============================================================ */
+let quizModeSecs = 0, quizPointPerQ = 1, quizTimerInterval = null, currentTimerSeconds = 0, studentName = "";
+
+function resetQuizToSetup() {
+  stopQuizTimer();
+  document.getElementById('quiz-setup-card').style.display = 'block';
+  document.getElementById('quiz-play-card').style.display = 'none';
+}
+function exitQuizToLanding() { stopQuizTimer(); showView('landing'); }
+function initQuizWithMode(seconds, points) {
+  const nameInput = document.getElementById('student-name-input');
+  studentName = (nameInput.value || "").trim() || "دانش‌آموز کوشا";
+  quizModeSecs = seconds; quizPointPerQ = points;
+  document.getElementById('quiz-setup-card').style.display = 'none';
+  document.getElementById('quiz-play-card').style.display = 'block';
+  document.getElementById('quiz-student-badge').innerText = `دانش‌آموز: ${studentName}`;
+  startQuiz();
+}
+function stopQuizTimer() { if (quizTimerInterval) { clearInterval(quizTimerInterval); quizTimerInterval = null; } }
+function startQuestionTimer() {
+  stopQuizTimer();
+  const timerBox = document.getElementById('quiz-timer-box');
+  if (quizModeSecs === 0) { timerBox.style.display = 'none'; return; }
+  currentTimerSeconds = quizModeSecs;
+  timerBox.style.display = 'inline-block';
+  timerBox.className = 'quiz-timer-badge safe';
+  timerBox.innerText = `⏳ زمان: ${fa(currentTimerSeconds)}`;
+  quizTimerInterval = setInterval(() => {
+    currentTimerSeconds--;
+    if (currentTimerSeconds <= 10) timerBox.className = 'quiz-timer-badge';
+    timerBox.innerText = `⏳ زمان: ${fa(currentTimerSeconds)}`;
+    if (currentTimerSeconds <= 0) { stopQuizTimer(); handleTimeOut(); }
+  }, 1000);
+}
+function handleTimeOut() {
+  if (answered) return;
+  answered = true;
+  const qData = activeQuiz[quizIndex];
+  const allBtns = document.querySelectorAll('.quiz-opt-btn');
+  const fbBox = document.getElementById('quiz-feedback-box');
+  allBtns[qData.answer].classList.add('correct');
+  fbBox.style.background = "rgba(239, 68, 68, 0.15)";
+  fbBox.style.color = "#b91c1c";
+  fbBox.innerHTML = `⏰ <b>زمان تمام شد!</b> گزینه سبز پاسخ درست بود.<br>` + qData.hint;
+  fbBox.classList.add('show');
+  const nextBtn = document.getElementById('quiz-next-btn');
+  nextBtn.innerText = (quizIndex < activeQuiz.length - 1) ? "سوال بعدی ›" : "مشاهده کارنامه نهایی 🏆";
+  nextBtn.classList.add('show');
+}
+function triggerConfetti() {
+  const emojis = ['🌸', '💖', '🌺', '💕', '🌷', '✨', '💐', '🎉'];
+  for (let i = 0; i < 18; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-particle';
+    el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+    const startX = window.innerWidth / 2 + (Math.random() * 60 - 30);
+    const startY = window.innerHeight / 2 + (Math.random() * 50 - 25);
+    el.style.left = startX + 'px'; el.style.top = startY + 'px';
+    el.style.setProperty('--tx', (Math.random() * 240 - 120) + 'px');
+    el.style.setProperty('--ty', (Math.random() * -200 - 50) + 'px');
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1500);
+  }
+}
+
+function shuffleOptions(qObj) {
+  const correctText = qObj.options[qObj.answer];
+  const shuffled = [...qObj.options].sort(() => Math.random() - 0.5);
+  qObj.options = shuffled;
+  qObj.answer = shuffled.indexOf(correctText);
+  return qObj;
+}
+
+const qGenerators = [
+  () => {
+    const a = Math.floor(Math.random() * 12) - 4;
+    return shuffleOptions({
+      q: `در مجموعه اعداد حقیقی <span class='math-expr' dir='ltr'>ℝ</span>، متمم نیم‌خط <span class='math-expr' dir='ltr'>A = [${a}, +∞)</span> کدام است؟`,
+      options: [`(-∞, ${a})`, `(-∞, ${a}]`, `(${a}, +∞)`, `[0, ${a})`],
+      answer: 0,
+      hint: `نقطه بسته در متمم به پرانتز باز تبدیل شده و جهت معکوس می‌شود: <span class='math-expr' dir='ltr'>(-∞, ${a})</span>.`
+    });
+  },
+  () => {
+    const b = Math.floor(Math.random() * 14) - 6;
+    return shuffleOptions({
+      q: `در <span class='math-expr' dir='ltr'>ℝ</span>، متمم بازه نامتناهی <span class='math-expr' dir='ltr'>B = (-∞, ${b})</span> کدام است؟`,
+      options: [`[${b}, +∞)`, `(${b}, +∞)`, `(-∞, ${b}]`, `ℝ`],
+      answer: 0,
+      hint: `چون خود نقطه ${b} در مجموعه نبود، در متمم بسته می‌شود: <span class='math-expr' dir='ltr'>[${b}, +∞)</span>.`
+    });
+  },
+  () => {
+    const a = Math.floor(Math.random() * 6) - 4;
+    const b = a + Math.floor(Math.random() * 5) + 3;
+    return shuffleOptions({
+      q: `متمم بازه <span class='math-expr' dir='ltr'>[${a}, ${b})</span> در مجموعه اعداد حقیقی <span class='math-expr' dir='ltr'>ℝ</span> چیست؟`,
+      options: [
+        `(-∞, ${a}) ∪ [${b}, +∞)`,
+        `(-∞, ${a}] ∪ (${b}, +∞)`,
+        `(-∞, ${b})`,
+        `[${b}, +∞)`
+      ],
+      answer: 0,
+      hint: `کروشه بسته به پرانتز باز و پرانتز باز به کروشه بسته در متمم تبدیل می‌شود.`
+    });
+  },
+  () => {
+    const a = Math.floor(Math.random() * 5) + 1;
+    const b = a + Math.floor(Math.random() * 5) + 3;
+    return shuffleOptions({
+      q: `اگر متمم یک بازه به صورت <span class='math-expr' dir='ltr'>A' = (-∞, ${a}] ∪ (${b}, +∞)</span> باشد، خود مجموعه <span class='math-expr' dir='ltr'>A</span> کدام بوده است؟`,
+      options: [`(${a}, ${b}]`, `[${a}, ${b}]`, `(${a}, ${b})`, `[${a}, ${b})`],
+      answer: 0,
+      hint: `طبق قانون متممِ متمم <span class='math-expr' dir='ltr'>(A')' = A</span>، فضای بین دو نیم‌خط مجموعه اصلی است.`
+    });
+  },
+  () => {
+    return shuffleOptions({
+      q: `بر اساس قانون اول دِ مورگان، حاصل عبارت <span class='math-expr' dir='ltr'>(A ∪ B)'</span> همواره برابر با کدام است؟`,
+      options: [`A' ∩ B'`, `A' ∪ B'`, `A - B`, `B' - A'`],
+      answer: 0,
+      hint: `متمم اجتماع برابر با اشتراک متمم‌هاست: <span class='math-expr' dir='ltr'>(A ∪ B)' = A' ∩ B'</span>.`
+    });
+  },
+  () => {
+    return shuffleOptions({
+      q: `بر اساس قانون دوم دِ مورگان، حاصل <span class='math-expr' dir='ltr'>(A ∩ B)'</span> دقیقاً با کدام گزینه برابر است؟`,
+      options: [`A' ∪ B'`, `A' ∩ B'`, `(A - B)'`, `U`],
+      answer: 0,
+      hint: `متمم اشتراک دو مجموعه برابر اجتماع متمم‌های آن‌هاست: <span class='math-expr' dir='ltr'>(A ∩ B)' = A' ∪ B'</span>.`
+    });
+  },
+  () => {
+    return shuffleOptions({
+      q: `اگر بدانیم <span class='math-expr' dir='ltr'>A ⊆ B</span> است، رابطه بین متمم‌های آن‌ها چگونه خواهد بود؟`,
+      options: [`B' ⊆ A'`, `A' ⊆ B'`, `A' = B'`, `A' ∪ B' = ∅`],
+      answer: 0,
+      hint: `در متمم‌گیری همواره جهت شمول زیرمجموعه معکوس می‌شود: <span class='math-expr' dir='ltr'>B' ⊆ A'</span>.`
+    });
+  },
+  () => {
+    return shuffleOptions({
+      q: `تفاضل دو مجموعه (<span class='math-expr' dir='ltr'>A - B</span>) طبق کتاب درسی با کدام رابطه هم‌ارز است؟`,
+      options: [`A ∩ B'`, `A ∪ B'`, `A' ∩ B`, `A' ∪ B'`],
+      answer: 0,
+      hint: `اعضایی که در A هستند و در B نیستند دقیقاً برابر با <span class='math-expr' dir='ltr'>A ∩ B'</span> است.`
+    });
+  },
+  () => {
+    const k = Math.floor(Math.random() * 5) + 3;
+    return shuffleOptions({
+      q: `اگر مجموعه مرجع <span class='math-expr' dir='ltr'>U = ℕ</span> و <span class='math-expr' dir='ltr'>A = {${k}, ${k+1}, ...}</span> باشد، متمم <span class='math-expr' dir='ltr'>A'</span> کدام است؟`,
+      options: [
+        `{1, 2, ..., ${k-1}}`,
+        `{0, 1, ..., ${k-1}}`,
+        `{1, 2, ..., ${k}}`,
+        `∅`
+      ],
+      answer: 0,
+      hint: `اعداد طبیعی از ۱ شروع می‌شوند؛ بنابراین اعضای قبل از ${k} در متمم قرار می‌گیرند.`
+    });
+  },
+  () => {
+    return shuffleOptions({
+      q: `حاصل متمم تهی (<span class='math-expr' dir='ltr'>∅'</span>) و متمم مرجع (<span class='math-expr' dir='ltr'>U'</span>) به ترتیب کدامند؟`,
+      options: [`U و ∅`, `∅ و U`, `A و A'`, `U و U`],
+      answer: 0,
+      hint: `متمم تهی کل مرجع یعنی U است و متمم کل مرجع برابر با تهی ∅ می‌باشد.`
+    });
+  }
+];
+
+let activeQuiz = [], quizIndex = 0, quizScore = 0, answered = false;
+
+function startQuiz() {
+  activeQuiz = [];
+  const shuffledGen = [...qGenerators].sort(() => Math.random() - 0.5);
+  for (let i = 0; i < 10; i++) {
+    activeQuiz.push(shuffledGen[i]());
+  }
+  quizIndex = 0; 
+  quizScore = 0;
+  loadQuizQuestion();
+}
+
+function loadQuizQuestion() {
+  answered = false;
+  const qData = activeQuiz[quizIndex];
+  const pct = (quizIndex / activeQuiz.length) * 100;
+  document.getElementById('quiz-progress-bar').style.width = pct + '%';
+  document.getElementById('quiz-counter-text').innerText = `سوال ${fa(quizIndex + 1)} از ۱۰`;
+  document.getElementById('quiz-score-text').innerText = `امتیاز: ${fa(quizScore)}`;
+  document.getElementById('quiz-question-text').innerHTML = qData.q;
+  
+  const optContainer = document.getElementById('quiz-options-container');
+  optContainer.innerHTML = '';
+  qData.options.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'quiz-opt-btn';
+    btn.innerHTML = `<span class="math-expr" dir="ltr">${opt}</span>`;
+    btn.onclick = () => checkQuizAnswer(idx, btn);
+    optContainer.appendChild(btn);
+  });
+
+  const fbBox = document.getElementById('quiz-feedback-box');
+  fbBox.className = 'quiz-feedback'; fbBox.innerHTML = '';
+  document.getElementById('quiz-next-btn').classList.remove('show');
+  startQuestionTimer();
+}
+
+function checkQuizAnswer(selectedIdx, btnElement) {
+  if (answered) return;
+  answered = true;
+  stopQuizTimer();
+  const qData = activeQuiz[quizIndex];
+  const allBtns = document.querySelectorAll('.quiz-opt-btn');
+  const fbBox = document.getElementById('quiz-feedback-box');
+  
+  if (selectedIdx === qData.answer) {
+    quizScore += quizPointPerQ;
+    btnElement.classList.add('correct');
+    fbBox.style.background = "rgba(16, 185, 129, 0.15)"; fbBox.style.color = "#047857";
+    fbBox.innerHTML = `✅ <b>آفرین ${studentName} جان، کاملاً درسته!</b> (+${fa(quizPointPerQ)} امتیاز)<br>` + qData.hint;
+    triggerConfetti();
+  } else {
+    btnElement.classList.add('wrong');
+    allBtns[qData.answer].classList.add('correct');
+    fbBox.style.background = "rgba(239, 68, 68, 0.15)"; fbBox.style.color = "#b91c1c";
+    fbBox.innerHTML = "❌ <b>اشتباه بود!</b> گزینه سبز پاسخ درست است.<br>" + qData.hint;
+  }
+  fbBox.classList.add('show');
+  const nextBtn = document.getElementById('quiz-next-btn');
+  nextBtn.innerText = (quizIndex < activeQuiz.length - 1) ? "سوال بعدی ›" : "مشاهده کارنامه نهایی 🏆";
+  nextBtn.classList.add('show');
+  document.getElementById('quiz-score-text').innerText = `امتیاز: ${fa(quizScore)}`;
+}
+
+function nextQuizQuestion() {
+  if (quizIndex < activeQuiz.length - 1) {
+    quizIndex++;
+    loadQuizQuestion();
+  } else {
+    stopQuizTimer();
+    document.getElementById('quiz-progress-bar').style.width = '100%';
+    const qBox = document.getElementById('quiz-question-text');
+    document.getElementById('quiz-options-container').innerHTML = '';
+    document.getElementById('quiz-feedback-box').classList.remove('show');
+    document.getElementById('quiz-timer-box').style.display = 'none';
+    const maxScore = 10 * quizPointPerQ;
+    const pct = Math.round((quizScore / maxScore) * 100);
+
+    qBox.innerHTML = `
+      <div style="font-size:1.1rem; font-weight:800; color:var(--color-comp); margin-bottom:6px;">کارنامه رسمی دانش‌آموز: ${studentName}</div>
+      <div style="font-size:1.5rem; font-weight:bold; color:var(--color-union); margin-bottom:8px;">امتیاز نهایی: ${fa(quizScore)} از ${fa(maxScore)} (${fa(pct)}٪)</div>
+      <div style="font-size:0.86rem; line-height:1.7;">🎉 عملکرد شما در آزمون مجموعه‌ها و بازه‌ها ثبت شد. برای آزمون مجدد با سوالات نو، روی دکمه زیر کلیک کنید.</div>
+    `;
+    const nextBtn = document.getElementById('quiz-next-btn');
+    nextBtn.innerText = "شروع چالش جدید 🔄";
+    nextBtn.onclick = () => { resetQuizToSetup(); };
+  }
+}
+
+/* ============================================================
+   راه‌اندازی اولیه
+============================================================ */
+function initApp() {
+  try {
+    onEndpointChange('u');
+    onEndpointChange('b');
+    dynDraw('B');
+    if (typeof selectLabOp === 'function') selectLabOp('union');
+    if (typeof selectVenn3Op === 'function') selectVenn3Op('union');
+  } catch (e) {
+    console.warn("Init warning:", e);
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
+</script>
+</body>
+</html>
